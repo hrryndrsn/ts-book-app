@@ -42,7 +42,8 @@ export const fetchReadingListData = async () => {
     readingList.push(newRecord);
   });
   //print out the new reading list
-  console.log(readingList);
+  // console.log(readingList);
+  return readingList
 }
 
 export const fetchColumnData = async () => {
