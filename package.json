@@ -1,15 +1,21 @@
 {
-  "name": "hello-gql-apollo",
+  "name": "ts-book-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@atlaskit/css-reset": "^3.0.5",
     "@types/jest": "23.3.10",
     "@types/node": "10.12.18",
     "@types/react": "16.7.18",
+    "@types/react-beautiful-dnd": "^10.0.0",
     "@types/react-dom": "16.0.11",
+    "@types/styled-components": "^4.1.4",
+    "axios": "^0.18.0",
     "react": "^16.7.0",
+    "react-beautiful-dnd": "^10.0.3",
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.1",
+    "styled-components": "^4.1.3",
     "typescript": "3.2.2"
   },
   "scripts": {
