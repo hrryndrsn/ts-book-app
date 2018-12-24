@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '@atlaskit/css-reset';
-import {fetchData, BookRecord, Fields} from './api'
+import {fetchReadingListData, fetchColumnData, BookRecord, Fields} from './api'
 
 import styled from 'styled-components';
 
@@ -13,7 +13,8 @@ const Container = styled.div`
 
 class App extends React.Component {
   playground = () => {
-    fetchData();
+    fetchReadingListData();
+    fetchColumnData();
   }
   render() {
     return (

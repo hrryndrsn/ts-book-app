@@ -19,7 +19,7 @@ export interface BookRecord {
 
 ///--------- Functions ---------------------------------------
 
-export const fetchData = async () => {
+export const fetchReadingListData = async () => {
   let readingList: BookRecord[];
   readingList = [];
 
@@ -43,5 +43,11 @@ export const fetchData = async () => {
   });
   //print out the new reading list
   console.log(readingList);
-  
+}
+
+export const fetchColumnData = async () => {
+  const colData = await axios.get(
+      `https://api.airtable.com/v0/appz2wjE9XrYOZ7Lq/columns?api_key=` + creds.key
+  )
+  console.log(colData.data.records)
 }
