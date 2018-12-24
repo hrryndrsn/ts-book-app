@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {fetchReadingListData, fetchColumnData, BookRecord, Fields} from './api'
 import BookList from './bookList'
+import {DragDropContext} from 'react-beautiful-dnd'
 
 import styled from 'styled-components';
 
@@ -32,15 +33,24 @@ export default class App extends React.Component<{}, AppState> {
     this.setState({readingList})
     console.log(readingList)
   }
+
+  onDragEnd = () => {
+    //update the state here
+  }
+
+
   render() {
     return (
       <Container>
         <div>
           <SiteTitle>Reading List 🌀</SiteTitle>
-          <BookList 
-            readingList={this.state.readingList}
-          />
-
+          <DragDropContext
+            onDragEnd={this.onDragEnd}
+          >
+            <BookList 
+              readingList={this.state.readingList}
+            />
+          </DragDropContext>
         </div>
      </Container>
     )

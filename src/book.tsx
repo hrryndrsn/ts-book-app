@@ -1,6 +1,7 @@
 import React from 'react';
 import {BookRecord, Fields} from './api';
 import styled from 'styled-components';
+import { Draggable } from 'react-beautiful-dnd';
 
 const BookCard = styled.div`
   padding: 20px;
@@ -36,18 +37,32 @@ const BookCardFooter = styled.div`
 
 type BookProps = {
   book: BookRecord
+  index: number
 }
 
 
-export const Book: React.FunctionComponent<BookProps> = ({book}): any => {
+export const Book: React.FunctionComponent<BookProps> = ({book, index}): any => {
   return (
-    <BookCard>
-      <BookTitle href={book.fields.bookUrl}>
-        {book.fields.bookTitle}
-      </BookTitle>
-      <BookCardFooter>
-        <BookAuthor>{book.fields.bookAuthor}</BookAuthor>
-      </BookCardFooter>
-    </BookCard>
+    <Draggable
+      draggableId={book.id}
+      index={index}
+    >
+      {(provided, snapshot) => (
+          <BookCard
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            <BookTitle href={book.fields.bookUrl}>
+              {book.fields.bookTitle}
+            </BookTitle>
+            <BookCardFooter>
+              <BookAuthor>{book.fields.bookAuthor}</BookAuthor>
+            </BookCardFooter>
+          </BookCard>
+        )
+      }
+
+    </Draggable>
   )
 }
