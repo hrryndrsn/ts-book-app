@@ -27,15 +27,16 @@ export interface Column {
 
 
 export const emptyColumn = {
-      bookIds: [],
+      bookIds: [""],
       name: "column-1",
       order: 0,
   }
 
+
+//Get all book data
 export const fetchReadingListData = async () => {
   let readingList: BookRecord[];
   readingList = [];
-
   const data =  await axios.get(
       `https://api.airtable.com/v0/appz2wjE9XrYOZ7Lq/reading%20list?api_key=` + creds.key
   )
@@ -54,18 +55,29 @@ export const fetchReadingListData = async () => {
     //append book records to the reading list
     readingList.push(newRecord);
   });
-  //print out the new reading list
-  // console.log(readingList);
   return readingList
 }
 
+//get data about the current of books
 export const fetchColumnData = async () => {
   let colData: Column;
   const resp = await axios.get(
       `https://api.airtable.com/v0/appz2wjE9XrYOZ7Lq/columns?api_key=` + creds.key
   )
-  
   //we are interested in the first column record and just the fields 
   colData = resp.data.records[0].fields
   return colData
+}
+
+export const updateColumnData = async (newColFields: Column) => {
+  // we only have one col so we have hardcoded the id
+  const id = "recM4eSNYiY6cET31";
+  const payload = {
+    fields: {
+      ...newColFields
+    }
+  }
+  const resp = await axios.put(
+    `https://api.airtable.com/v0/appz2wjE9XrYOZ7Lq/columns/${id}?api_key=` + creds.key, payload
+  )
 }
