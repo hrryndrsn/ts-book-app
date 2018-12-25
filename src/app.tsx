@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {fetchReadingListData, fetchColumnData, BookRecord, Fields} from './api'
+import {fetchReadingListData, emptyColumn, fetchColumnData, BookRecord, Fields, Column} from './api'
 import BookList from './bookList'
 import {DragDropContext} from 'react-beautiful-dnd'
 
@@ -17,12 +17,16 @@ const SiteTitle = styled.h1`
 `
 
 type AppState = {
-  readingList: BookRecord[]
+  readingList: BookRecord[],
+  column: Column
 }
 
 export default class App extends React.Component<{}, AppState> {
   
-  state = {readingList: []};
+  state = {
+    readingList: [], 
+    column: emptyColumn
+  };
 
   componentDidMount = () => {
     this.loadData()
@@ -30,8 +34,24 @@ export default class App extends React.Component<{}, AppState> {
 
   loadData = async () => {
     const readingList = await fetchReadingListData();
-    this.setState({readingList})
-    console.log(readingList)
+    const column = await fetchColumnData();
+    
+    const filteredBooks: BookRecord[] = this.resolveBookRecords(column.bookIds, readingList)
+    this.setState({readingList: filteredBooks, column})
+  }
+
+  resolveBookRecords = ( bookIds: string[], readingList: BookRecord[]) => {
+    let filteredList: BookRecord[] = []
+    //map over the book ids array
+    bookIds.map((bookId) => {
+      //FOR EACH bookId, find the bookId in the reading list 
+      const result = readingList.filter((book) => {
+        return book.id === bookId
+      })
+      filteredList.push(...result);
+    })
+
+    return filteredList
   }
 
   onDragEnd = () => {

@@ -17,7 +17,20 @@ export interface BookRecord {
   createdTime: Date;
 }
 
+export interface Column {
+    bookIds: string[]
+    name: string
+    order: number
+}
+
 ///--------- Functions ---------------------------------------
+
+
+export const emptyColumn = {
+      bookIds: [],
+      name: "column-1",
+      order: 0,
+  }
 
 export const fetchReadingListData = async () => {
   let readingList: BookRecord[];
@@ -47,8 +60,12 @@ export const fetchReadingListData = async () => {
 }
 
 export const fetchColumnData = async () => {
-  const colData = await axios.get(
+  let colData: Column;
+  const resp = await axios.get(
       `https://api.airtable.com/v0/appz2wjE9XrYOZ7Lq/columns?api_key=` + creds.key
   )
-  console.log(colData.data.records)
+  
+  //we are interested in the first column record and just the fields 
+  colData = resp.data.records[0].fields
+  return colData
 }
