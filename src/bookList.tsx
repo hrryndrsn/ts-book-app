@@ -10,7 +10,7 @@ type BookListProps = {
 };
 
 const Container = styled.div`
-  margin: 50px 0;
+  
 `;
 
 const BookListContainer = styled.div``;

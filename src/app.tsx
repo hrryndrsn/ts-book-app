@@ -14,19 +14,47 @@ const Container = styled.div`
   margin-top: 50px;;
 `
 
+const SiteTitleGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+`
+
+const AddBookButton = styled.button`
+ height: 40px;
+ width: 100px;
+ border: none;
+ background: #2ed573;
+ color: #fff;
+ outline: none;
+ box-shadow: 0px 2px 0px rgba(0,0,0, 0.2);
+ border-radius: 5px;
+ font-weight: bold;
+ font-size: 16px;
+ &:active {
+   background: #16B556;
+   box-shadow: none;
+ }
+ &:hover {
+   background: #16B556;
+ }
+`
+
 const SiteTitle = styled.h1`
 `
 
 type AppState = {
   readingList: BookRecord[],
-  column: Column
+  column: Column,
+  newBookFormActive: boolean
 }
 
 export default class App extends React.Component<{}, AppState> {
   
   state = {
     readingList: [],
-    column: emptyColumn
+    column: emptyColumn,
+    newBookFormActive: false
   };
 
   componentDidMount = () => {
@@ -102,12 +130,27 @@ export default class App extends React.Component<{}, AppState> {
     updateTable(newColumn);
   };
 
+  toggleNewBookForm = () => {
+    const flip = !this.state.newBookFormActive
+    this.setState({newBookFormActive: flip})
+  }
+
   render() {
     return (
       <Container>
-        <div>
-          <SiteTitle>📚 Reading List</SiteTitle>
-          <NewBookForm />
+          <SiteTitleGroup>
+            <SiteTitle>📚 Reading List</SiteTitle>
+            { !this.state.newBookFormActive && 
+              <AddBookButton
+                onClick={this.toggleNewBookForm}
+              >
+               Add book
+              </AddBookButton>
+            }
+          </SiteTitleGroup>
+          { this.state.newBookFormActive && 
+              <NewBookForm cancel={this.toggleNewBookForm}/>
+          }
           <DragDropContext
             onDragEnd={this.onDragEnd}
           >
@@ -115,7 +158,6 @@ export default class App extends React.Component<{}, AppState> {
               readingList={this.state.readingList}
             />
           </DragDropContext>
-        </div>
      </Container>
     )
   }

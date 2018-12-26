@@ -15,6 +15,9 @@ const NewBookInput = styled.input`
   color: #000;
   outline: none;
   border: none;
+  height: 30px;
+  transition: border 500ms ease;
+  border-bottom: #fff 2px solid;
   &:focus {
     border-bottom: #2ed573 2px solid;
   }
@@ -35,6 +38,7 @@ const AddButton = styled.button`
  border-radius: 5px;
  font-weight: bold;
  font-size: 16px;
+ 
  &:active {
    background: #16B556;
    box-shadow: none;
@@ -53,7 +57,24 @@ const CancelButton = styled.button`
  font-size: 16px;
 `
 
-export default class NewBookForm extends React.Component<{}, {}> {
+type NewBookFormProps = {
+  cancel: () => void 
+}
+
+type NewBookFormState = {
+  BookTitle: string,
+  BookAuthor: string,
+  BookUrl: string
+}
+
+export default class NewBookForm extends React.Component<
+NewBookFormProps, NewBookFormState> {
+  state = {
+    BookTitle: "",
+    BookAuthor: "",
+    BookUrl: "",
+  }
+  
   render() {
     return (
         <FormCard>
@@ -70,7 +91,9 @@ export default class NewBookForm extends React.Component<{}, {}> {
             placeholder="URL..."
           />
           <CardFooter>
-            <CancelButton>Cancel</CancelButton>
+            <CancelButton
+              onClick={this.props.cancel}
+            >Cancel</CancelButton>
             <AddButton>Add</AddButton>
           </CardFooter>
         </FormCard>
