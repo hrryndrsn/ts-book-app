@@ -29,7 +29,7 @@ export default class App extends React.Component<{}, AppState> {
   };
 
   componentDidMount = () => {
-    document.title = " 🌀 Reading list";
+    document.title = "Reading list";
     this.loadData()
   }
 
