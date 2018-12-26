@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {fetchReadingListData, emptyColumn, fetchColumnData, BookRecord, Column, updateColumnData} from './api'
 import BookList from './bookList'
 import {DragDropContext, DropResult} from 'react-beautiful-dnd'
+import NewBookForm from './newBookForm'
 
 import styled from 'styled-components';
 
@@ -106,6 +107,7 @@ export default class App extends React.Component<{}, AppState> {
       <Container>
         <div>
           <SiteTitle>📚 Reading List</SiteTitle>
+          <NewBookForm />
           <DragDropContext
             onDragEnd={this.onDragEnd}
           >
