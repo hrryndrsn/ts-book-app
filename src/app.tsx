@@ -24,11 +24,12 @@ type AppState = {
 export default class App extends React.Component<{}, AppState> {
   
   state = {
-    readingList: [], 
+    readingList: [],
     column: emptyColumn
   };
 
   componentDidMount = () => {
+    document.title = " 🌀 Reading list";
     this.loadData()
   }
 
@@ -104,7 +105,7 @@ export default class App extends React.Component<{}, AppState> {
     return (
       <Container>
         <div>
-          <SiteTitle>🌀 Reading List</SiteTitle>
+          <SiteTitle>📚 Reading List</SiteTitle>
           <DragDropContext
             onDragEnd={this.onDragEnd}
           >
