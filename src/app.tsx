@@ -92,6 +92,7 @@ export default class App extends React.Component<{}, AppState> {
       column: newColumn
     })
 
+    //create a async function to manage the update
     const updateTable = async (column: Column) => {
       const result = await updateColumnData(column)
       console.log(result)
@@ -103,7 +104,7 @@ export default class App extends React.Component<{}, AppState> {
     return (
       <Container>
         <div>
-          <SiteTitle>Reading List 🌀</SiteTitle>
+          <SiteTitle>🌀 Reading List</SiteTitle>
           <DragDropContext
             onDragEnd={this.onDragEnd}
           >

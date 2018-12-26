@@ -1,4 +1,4 @@
-import creds from "./key.json";
+// import creds from "./key.json";
 import axios from "axios";
 
 ///--------- Types -----------------------------------------
@@ -32,13 +32,14 @@ export const emptyColumn = {
       order: 0,
   }
 
+const ATKey = process.env.REACT_APP_AIRTABLE_API_KEY
 
 //Get all book data
 export const fetchReadingListData = async () => {
   let readingList: BookRecord[];
   readingList = [];
   const data =  await axios.get(
-      `https://api.airtable.com/v0/appz2wjE9XrYOZ7Lq/reading%20list?api_key=` + creds.key
+      `https://api.airtable.com/v0/appz2wjE9XrYOZ7Lq/reading%20list?api_key=` + ATKey
   )
 
   let kys = Object.keys(data.data.records);
@@ -62,7 +63,7 @@ export const fetchReadingListData = async () => {
 export const fetchColumnData = async () => {
   let colData: Column;
   const resp = await axios.get(
-      `https://api.airtable.com/v0/appz2wjE9XrYOZ7Lq/columns?api_key=` + creds.key
+      `https://api.airtable.com/v0/appz2wjE9XrYOZ7Lq/columns?api_key=` + ATKey
   )
   //we are interested in the first column record and just the fields 
   colData = resp.data.records[0].fields
@@ -78,6 +79,6 @@ export const updateColumnData = async (newColFields: Column) => {
     }
   }
   const resp = await axios.put(
-    `https://api.airtable.com/v0/appz2wjE9XrYOZ7Lq/columns/${id}?api_key=` + creds.key, payload
+    `https://api.airtable.com/v0/appz2wjE9XrYOZ7Lq/columns/${id}?api_key=` + ATKey, payload
   )
 }
