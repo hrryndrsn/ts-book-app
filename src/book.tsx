@@ -21,7 +21,7 @@ const BookTitle = styled.a`
   font-weight: bold;
   margin: 10px 0;
   &:hover {
-    color: #5352ed;
+    color: #2ed573;
     text-decoration: none;
   }
 `
