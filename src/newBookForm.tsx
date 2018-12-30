@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import styled from 'styled-components';
 
 const FormCard = styled.div`
@@ -10,6 +10,12 @@ const FormCard = styled.div`
   display: grid;
   gap: 20px;
 `
+
+const FormGroup = styled.form`
+  display: grid;
+  gap: 20px;
+`
+
 const NewBookInput = styled.input`
   font-size: 24px;
   color: #000;
@@ -59,6 +65,7 @@ const CancelButton = styled.button`
 
 type NewBookFormProps = {
   cancel: () => void 
+  addNewBook: (data: BookData) => void
 }
 
 type NewBookFormState = {
@@ -67,35 +74,81 @@ type NewBookFormState = {
   BookUrl: string
 }
 
-export default class NewBookForm extends React.Component<
-NewBookFormProps, NewBookFormState> {
+export interface BookData {
+  BookTitle: string,
+  BookAuthor: string,
+  BookUrl: string
+}
+
+export class NewBookForm extends React.Component<
+  NewBookFormProps, 
+  NewBookFormState
+> {
   state = {
     BookTitle: "",
     BookAuthor: "",
     BookUrl: "",
   }
+
+  handleSubmitForm = (event: SyntheticEvent) => {
+    event.preventDefault();
+    let data: BookData = {
+      BookTitle: this.state.BookTitle,
+      BookAuthor: this.state.BookAuthor,
+      BookUrl: this.state.BookUrl
+    }
+    this.props.addNewBook(data)
+  }
+
+  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    switch (event.currentTarget.id) {
+      case "title":
+        this.setState({ BookTitle: event.target.value})
+        break
+      case "author":
+        this.setState({ BookAuthor: event.target.value})
+        break
+      case "url":
+        this.setState({ BookUrl: event.target.value})
+      break
+    }
+  }
   
   render() {
     return (
         <FormCard>
+          <FormGroup onSubmit={this.handleSubmitForm}>
           <NewBookInput
+            id="title"
             placeholder="Title..."
             autoFocus={true}
             className="bookTitleInput"
+            onChange={this.handleInputChange}
+            required
           />
           <NewBookInput
+            id="author"
             placeholder="Author(s)..."
+            onChange={this.handleInputChange}
+            required
           />
           <NewBookInput
+            id="url"
             className="linkInput"
             placeholder="URL..."
+            // type="url"
+            onChange={this.handleInputChange}
+            required
           />
           <CardFooter>
             <CancelButton
               onClick={this.props.cancel}
             >Cancel</CancelButton>
-            <AddButton>Add</AddButton>
+            <AddButton
+              type="submit"
+            >Add</AddButton>
           </CardFooter>
+          </FormGroup>
         </FormCard>
     )
   }

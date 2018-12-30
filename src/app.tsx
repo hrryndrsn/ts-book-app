@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {fetchReadingListData, emptyColumn, fetchColumnData, BookRecord, Column, updateColumnData} from './api'
 import BookList from './bookList'
 import {DragDropContext, DropResult} from 'react-beautiful-dnd'
-import NewBookForm from './newBookForm'
+import {NewBookForm, BookData} from './newBookForm'
 
 import styled from 'styled-components';
 
@@ -135,12 +135,18 @@ export default class App extends React.Component<{}, AppState> {
     this.setState({newBookFormActive: flip})
   }
 
+  handAddNewBook = (data: BookData) => {
+    console.log(data)
+    //add new book to the reading list 
+  }
+
   render() {
     return (
       <Container>
           <SiteTitleGroup>
             <SiteTitle>📚 Reading List</SiteTitle>
-            { !this.state.newBookFormActive && 
+            { //conditionally render the add book button
+              !this.state.newBookFormActive && 
               <AddBookButton
                 onClick={this.toggleNewBookForm}
               >
@@ -148,8 +154,12 @@ export default class App extends React.Component<{}, AppState> {
               </AddBookButton>
             }
           </SiteTitleGroup>
-          { this.state.newBookFormActive && 
-              <NewBookForm cancel={this.toggleNewBookForm}/>
+          { //conditionally render the add book form
+            this.state.newBookFormActive && 
+              <NewBookForm 
+                cancel={this.toggleNewBookForm}
+                addNewBook={this.handAddNewBook}
+              />
           }
           <DragDropContext
             onDragEnd={this.onDragEnd}

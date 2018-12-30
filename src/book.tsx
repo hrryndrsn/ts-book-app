@@ -34,7 +34,6 @@ const BookCardFooter = styled.div`
   margin-top: 20px;
 `
 
-
 type BookProps = {
   book: BookRecord
   index: number
