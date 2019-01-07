@@ -96,8 +96,13 @@ export class NewBookForm extends React.Component<
       BookTitle: this.state.BookTitle,
       BookAuthor: this.state.BookAuthor,
       BookUrl: this.state.BookUrl
-    }
-    this.props.addNewBook(data)
+    };
+    this.props.addNewBook(data);
+    this.setState({
+      BookTitle: "",
+      BookAuthor: "",
+      BookUrl: "",
+    });
   }
 
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

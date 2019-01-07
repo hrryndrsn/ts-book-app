@@ -149,12 +149,17 @@ export default class App extends React.Component<{}, AppState> {
 
         const newRL = [...this.state.readingList, book]
         const resolvedRL = this.resolveBookRecords(newColumn.bookIds, newRL)
-        this.setState({readingList: resolvedRL, column: newColumn})
         // console.log(newColumn, "new Col ->")
         updateColumnData(newColumn)
-          .then((data: any) => {
-            console.log('data->', data)
-          })
+        .then((data: any) => {
+          console.log('data->', data)
+        })
+
+        this.setState({
+          readingList: resolvedRL, 
+          column: newColumn,
+          newBookFormActive: false
+        })
       })
   }
 
