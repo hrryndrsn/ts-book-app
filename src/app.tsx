@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {fetchReadingListData, emptyColumn, fetchColumnData, BookRecord, Column, updateColumnData} from './api'
+import {fetchReadingListData, emptyColumn, fetchColumnData, BookRecord, Column, updateColumnData, AddBook} from './api'
 import BookList from './bookList'
 import {DragDropContext, DropResult} from 'react-beautiful-dnd'
 import {NewBookForm, BookData} from './newBookForm'
@@ -135,9 +135,27 @@ export default class App extends React.Component<{}, AppState> {
     this.setState({newBookFormActive: flip})
   }
 
-  handAddNewBook = (data: BookData) => {
-    console.log(data)
-    //add new book to the reading list 
+  handleAddNewBook = (data: BookData) => {
+    // console.log(data)
+    //add new book to the reading list via api
+    AddBook(data)
+      .then((book: BookRecord) => {
+        console.log('book to add->',book)
+        const newColumn: Column = {
+          bookIds: [...this.state.column.bookIds, book.id],
+          name: this.state.column.name,
+          order: this.state.column.order
+        };
+
+        const newRL = [...this.state.readingList, book]
+        const resolvedRL = this.resolveBookRecords(newColumn.bookIds, newRL)
+        this.setState({readingList: resolvedRL, column: newColumn})
+        // console.log(newColumn, "new Col ->")
+        updateColumnData(newColumn)
+          .then((data: any) => {
+            console.log('data->', data)
+          })
+      })
   }
 
   render() {
@@ -158,7 +176,7 @@ export default class App extends React.Component<{}, AppState> {
             this.state.newBookFormActive && 
               <NewBookForm 
                 cancel={this.toggleNewBookForm}
-                addNewBook={this.handAddNewBook}
+                addNewBook={this.handleAddNewBook}
               />
           }
           <DragDropContext

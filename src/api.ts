@@ -1,5 +1,6 @@
 // import creds from "./key.json";
 import axios from "axios";
+import { BookData } from "./newBookForm";
 
 ///--------- Types -----------------------------------------
 
@@ -81,4 +82,38 @@ export const updateColumnData = async (newColFields: Column) => {
   const resp = await axios.put(
     `https://api.airtable.com/v0/appz2wjE9XrYOZ7Lq/columns/${id}?api_key=` + ATKey, payload
   )
+  return resp.data
+}
+
+export const AddBook = async (bookData: BookData) => {
+  // we only have one col so we have hardcoded the id
+  const colId = "recM4eSNYiY6cET31"
+  const {BookTitle, BookAuthor, BookUrl} = bookData
+  const payload = {
+    fields: {
+      bookTitle: BookTitle,
+      bookAuthor: BookAuthor,
+      bookUrl: BookUrl
+    }
+  }
+  const resp = await axios.post(
+    `https://api.airtable.com/v0/appz2wjE9XrYOZ7Lq/reading%20list?api_key=` + ATKey, payload
+  )
+  console.log(resp.data)
+  return resp.data
+}
+
+export const UpdateReadingList = async (rl: BookRecord[]) => {
+  // we only have one col so we have hardcoded the id
+  const id = "recM4eSNYiY6cET31";
+  // const payload = {
+  //   fields: {
+  //     ...rl
+  //   }
+  // }
+  // const resp = await axios.patch(
+  //   `https://api.airtable.com/v0/appz2wjE9XrYOZ7Lq/reading%20list/${id}?api_key=` + ATKey, payload
+  // )
+
+  // console.log(this)
 }
