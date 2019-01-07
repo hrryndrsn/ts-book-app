@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {fetchReadingListData, emptyColumn, fetchColumnData, BookRecord, Column, updateColumnData, AddBook} from './api'
 import BookList from './bookList'
 import {DragDropContext, DropResult} from 'react-beautiful-dnd'
@@ -18,6 +17,7 @@ const SiteTitleGroup = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  align-items: center;
 `
 
 const AddBookButton = styled.button`
@@ -41,6 +41,7 @@ const AddBookButton = styled.button`
 `
 
 const SiteTitle = styled.h1`
+  font-size: 40px;
 `
 
 type AppState = {
